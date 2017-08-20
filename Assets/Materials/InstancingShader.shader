@@ -17,6 +17,7 @@ Shader "Custom/InstancingShader" {
             #pragma vertex vert
             #pragma fragment frag
             #pragma multi_compile_instancing
+
             #include "UnityCG.cginc"
 
 			float4 _MetaPosition1;
@@ -58,10 +59,11 @@ Shader "Custom/InstancingShader" {
 				o.posit = objpos + retpos;
 
 				float scale = 0.0;
-				float scale1 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition1.xyz) * 0.25); 
-				float scale2 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition2.xyz) * 0.25); 
-				float scale3 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition3.xyz) * 0.25); 
-				float scale4 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition4.xyz) * 0.25); 
+				float ratio = 0.25;
+				float scale1 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition1.xyz) * ratio); 
+				float scale2 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition2.xyz) * ratio); 
+				float scale3 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition3.xyz) * ratio); 
+				float scale4 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition4.xyz) * ratio); 
 				
 				scale += scale1;
 				scale += scale2;
@@ -74,8 +76,8 @@ Shader "Custom/InstancingShader" {
 				o.ratio.z = scale3;
 				o.ratio.w = scale4;
 
-				if(scale > 0.5) scale = min(scale, 1.0);
-				else scale = 0.0;
+				//if(scale > 0.5) scale = 1.0;
+				//else scale = 0.0;
 
 				//scale = 1.0;
 				float4x4 matscl = {
@@ -84,6 +86,9 @@ Shader "Custom/InstancingShader" {
 					0.0, 0.0, scale, 0.0,
 					0.0, 0.0, 0.0, 1.0,
 				};
+
+				//retpos = mul(matscl, v.vertex);
+				//retpos = UnityObjectToClipPos(retpos);
                 o.vertex = UnityObjectToClipPos(mul(matscl, retpos));
                 return o;
             }

@@ -12,7 +12,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -74,7 +74,7 @@ Material:
     m_Colors:
     - _Color: {r: 0.5441177, g: 0.35207614, b: 0.35207614, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MetaPosition1: {r: -1.7089472, g: 0.45482913, b: 5.9288564, a: 0}
-    - _MetaPosition2: {r: 0.5056538, g: -0.3700379, b: -0.15947263, a: 0}
-    - _MetaPosition3: {r: 0.75848067, g: -0.55505687, b: 2.8575463, a: 0}
-    - _MetaPosition4: {r: -0.24413532, g: 0.06497559, b: 0.9030721, a: 0}
+    - _MetaPosition1: {r: -3.8577027, g: -3.7134027, b: 4.3013587, a: 0}
+    - _MetaPosition2: {r: 1.4316792, g: 1.8979237, b: 1.1753459, a: 0}
+    - _MetaPosition3: {r: 2.1475189, g: 2.8468857, b: 0.0870699, a: 0}
+    - _MetaPosition4: {r: -0.5511004, g: -0.5304861, b: -0.8625577, a: 0}
