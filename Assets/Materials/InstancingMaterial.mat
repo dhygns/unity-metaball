@@ -42,6 +42,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetaTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -74,7 +78,7 @@ Material:
     m_Colors:
     - _Color: {r: 0.5441177, g: 0.35207614, b: 0.35207614, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _MetaPosition1: {r: -3.8577027, g: -3.7134027, b: 4.3013587, a: 0}
-    - _MetaPosition2: {r: 1.4316792, g: 1.8979237, b: 1.1753459, a: 0}
-    - _MetaPosition3: {r: 2.1475189, g: 2.8468857, b: 0.0870699, a: 0}
-    - _MetaPosition4: {r: -0.5511004, g: -0.5304861, b: -0.8625577, a: 0}
+    - _MetaPosition1: {r: 0.06632466, g: 0.044170294, b: 0.047078468, a: 0.45}
+    - _MetaPosition2: {r: 0.032959238, g: 0.035469413, b: 0.024138536, a: 0.41}
+    - _MetaPosition3: {r: 0.004647407, g: 0.0050013536, b: -0.00095424376, a: 0.48}
+    - _MetaPosition4: {r: -0.060376056, g: -0.012689385, b: 0.056236025, a: 0.17994714}

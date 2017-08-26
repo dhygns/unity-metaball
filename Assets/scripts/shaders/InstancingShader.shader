@@ -3,6 +3,7 @@
 Shader "Custom/InstancingShader" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
+		_MetaTexture ("meta texture", 2D) = "black" {}
 		_MetaPosition1 ("meta position 1", Vector) = (0.0, 0.0, 0.0, 0.0)
 		_MetaPosition2 ("meta position 2", Vector) = (0.0, 0.0, 0.0, 0.0)
 		_MetaPosition3 ("meta position 3", Vector) = (0.0, 0.0, 0.0, 0.0)
@@ -20,6 +21,7 @@ Shader "Custom/InstancingShader" {
 
             #include "UnityCG.cginc"
 
+			sampler2D _MetaTexture;
 			float4 _MetaPosition1;
 			float4 _MetaPosition2;
 			float4 _MetaPosition3;
@@ -59,17 +61,16 @@ Shader "Custom/InstancingShader" {
 				o.posit = objpos + retpos;
 
 				float scale = 0.0;
-				float ratio = 0.25;
-				float scale1 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition1.xyz) * ratio); 
-				float scale2 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition2.xyz) * ratio); 
-				float scale3 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition3.xyz) * ratio); 
-				float scale4 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition4.xyz) * ratio); 
+
+				float scale1 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition1.xyz) * _MetaPosition1.w); 
+				float scale2 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition2.xyz) * _MetaPosition2.w); 
+				float scale3 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition3.xyz) * _MetaPosition3.w); 
+				float scale4 = smoothstep(1.0, 0.0, length(objpos.xyz - _MetaPosition4.xyz) * _MetaPosition4.w); 
 				
 				scale += scale1;
 				scale += scale2;
 				scale += scale3;
 				scale += scale4;
-				
 
 				o.ratio.x = scale1;
 				o.ratio.y = scale2;
@@ -78,6 +79,15 @@ Shader "Custom/InstancingShader" {
 
 				//if(scale > 0.5) scale = 1.0;
 				//else scale = 0.0;
+				
+				float4 uvs = float4(objpos.y * 0.5, objpos.x, 0.0, 0.0);
+				float fft = abs(tex2Dlod(_MetaTexture, uvs).r) * 2.0;
+				
+				//if(fft < 0.2) fft = 0.0;
+				
+				scale *= fft + 1.0;
+
+				o.color = float4(scale2 * fft, scale3 * fft, scale4 * fft, 1.0);
 
 				//scale = 1.0;
 				float4x4 matscl = {
@@ -102,7 +112,7 @@ Shader "Custom/InstancingShader" {
 				norm += i.ratio.w * normalize(i.posit.xyz - _MetaPosition4.xyz);
 				norm = normalize(norm);
 				float brightness = dot(norm, float3(1.0, 1.0, 1.0)) * 0.5 + 0.5;
-				float3 retcol = float3(brightness, brightness, brightness);
+				float3 retcol = float3(brightness,brightness,brightness);// * i.color.r, brightness * i.color.g, brightness * i.color.b);
 				return float4(retcol, 1.0);
                 //UNITY_SETUP_INSTANCE_ID(i); // necessary only if any instanced properties are going to be accessed in the fragment Shader.
                 //return UNITY_ACCESS_INSTANCED_PROP(_Color);
